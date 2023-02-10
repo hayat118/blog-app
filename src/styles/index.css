@@ -172,6 +172,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+/*header  */
+.logo {
+  font-size: 38px;
+  color: #5cb85b;
+}
+
 /* home */
 .feed {
   padding: 20px 0 20px 50px;
@@ -217,7 +223,12 @@ input {
   margin-top: 20px;
   display: inline-block;
 }
+.active {
+  color: green;
+}
 /* .centre {
   text-align: center;
   justify-content: center;
 } */
+
+/* page */

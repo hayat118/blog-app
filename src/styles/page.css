@@ -1,0 +1,14 @@
+.page {
+  /* background-color: aqua; */
+  padding: 3px;
+  border: 1px solid black;
+  margin-right: 1px;
+}
+.page-box {
+  display: flex;
+  justify-content: center;
+}
+.focus {
+  background-color: green;
+  color: white;
+}

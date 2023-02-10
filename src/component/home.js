@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { withRouter } from "../utils/withRouter";
 import Hero from "./hero";
+import Pagination from "./pagination";
 
 // import { FaThumbsUp } from "react-icons/fa";
 
@@ -9,22 +10,63 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // error: "",
       articles: {},
       filteredArticles: [],
       taglist: [],
       data: null,
       likes: 0,
-      dispaly: false,
-      // tag: "",
+      articlePerPage: 4,
+      totalArticles: 0,
+      activePage: 1,
+      // dispaly: false,
     };
   }
 
   componentDidMount() {
     fetch(`https://conduitapi.onrender.com/api/articles`)
       .then((res) => res.json())
-      .then((data) => this.setState({ data }));
-    // .then((data) => console.log(data));
+      .then((data) =>
+        this.setState({
+          totalArticles: data.articles.length,
+          data: {
+            articles: data.articles.slice(0, this.state.articlePerPage),
+          },
+        })
+      );
+    // .then((data) => console.log(data.articles.length, "abcd"));
   }
+
+  componentDidUpdate(_prevProps, prevState) {
+    // console.log(prevProps, prevState, "aaa");
+    if (prevState.activePage !== this.state.activePage) {
+      this.fetchArticles();
+    }
+  }
+
+  fetchArticles = () => {
+    const limit = this.state.articlePerPage;
+    const offset = (this.state.activePage - 1) * limit;
+
+    fetch(
+      `https://conduitapi.onrender.com/api/articles/?offset=${offset}&limit=${limit}`
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({
+          data: data,
+          // error: "",
+        });
+      })
+      .catch((err) => {
+        this.setState({ error: "Not able to fetch data" });
+      });
+  };
 
   // handleGlobal = () => {
   //   this.setState({
@@ -54,18 +96,18 @@ class Home extends React.Component {
 
         <section className="flex">
           <div className="article-box">
-            <NavLink
+            <Link
               className="feed"
               to="/"
               onClick={this.handleGlobal}
               exact="true"
             >
               Global Feed
-            </NavLink>
+            </Link>
 
             {this.state.data.articles.map((post, i) => {
               if (tagName && !post.article.taglist.includes(tagName)) {
-                return <div key={i} />;
+                return <div key={post.slug} />;
               }
 
               return (
@@ -73,7 +115,7 @@ class Home extends React.Component {
                   <div className=" padding-50" key={post.article.title}>
                     <h2>{post.article.title}</h2>
                     <p>{post.article.description}</p>
-                    <NavLink to={`/${post.article.slug}`}>Read More</NavLink>
+                    <Link to={`/${post.article.slug}`}>Read More</Link>
                     <h2>{this.state.likes}</h2>
 
                     <button onClick={(e) => this.handleLikes(e)}>Likes</button>
@@ -86,7 +128,9 @@ class Home extends React.Component {
           <div className="tags-container">
             <h2>Popular Tags</h2>
             <button className="tag">
-              <NavLink to={`/`}>All</NavLink>
+              <Link exact="true" to={`/`}>
+                All
+              </Link>
             </button>
             {this.state.data.articles.map((post, i) => {
               return (
@@ -94,13 +138,29 @@ class Home extends React.Component {
                   {post.article.taglist.map((tag, i) => {
                     return (
                       <button key={i} className="tag">
-                        <NavLink to={`/?tag=${tag}`}>{tag}</NavLink>
+                        <Link to={`/?tag=${tag}`}>{tag}</Link>
                       </button>
                     );
                   })}
                 </>
               );
             })}
+          </div>
+        </section>
+        <section>
+          <div className="page-box ">
+            <Pagination
+              total={this.state.totalArticles}
+              activePage={this.state.activePage}
+              onPageChange={(pageNumber) => {
+                this.setState(
+                  {
+                    activePage: pageNumber,
+                  },
+                  this.fetchArticles
+                );
+              }}
+            />
           </div>
         </section>
       </>

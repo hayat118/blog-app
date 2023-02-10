@@ -13,18 +13,26 @@ class Header extends React.Component {
       <>
         <section className="flex justify padding-50">
           <div>
-            <NavLink to="">conduit</NavLink>
+            <NavLink className="logo" to="/">
+              conduit
+            </NavLink>
           </div>
           <div>
             <ul className="flex ">
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink exact="true" to="/">
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/signin">Sign In</NavLink>
+                <NavLink exact="true" to="/signin">
+                  Sign In
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/signup">Sign Up</NavLink>
+                <NavLink exact="true" to="/signup">
+                  Sign Up
+                </NavLink>
               </li>
             </ul>
           </div>

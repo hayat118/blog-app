@@ -43,7 +43,7 @@ class Signin extends React.Component {
 
     const { email, password } = this.state;
 
-    fetch("https://conduitapi.onrender.com/api/login", {
+    fetch("https://conduitapi.onrender.com/api/users/login", {
       method: "POST",
       header: {
         "Content-Type": "application/json",
@@ -63,6 +63,7 @@ class Signin extends React.Component {
         this.setState({ email: "", password: "" });
         this.props.history.push("/");
       })
+      .then(console.log)
       .catch((errors) => {
         this.setState((prevState) => {
           return {
