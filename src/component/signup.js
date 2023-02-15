@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { withRouter } from "../utils/withRouter";
 
 class Signup extends React.Component {
@@ -47,13 +47,12 @@ class Signup extends React.Component {
   };
 
   handleSubmit = (event) => {
-    console.log(event);
-    const { username, email, password } = this.state;
     event.preventDefault();
+    const { username, email, password } = this.state;
 
     fetch("https://conduitapi.onrender.com/api/users", {
       method: "POST",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ user: { username, email, password } }),
@@ -62,6 +61,7 @@ class Signup extends React.Component {
         if (!res.ok) {
           return res.json().then(({ errors }) => {
             return Promise.reject(errors);
+            // throw new Error("Fetch not successful");
           });
         }
         return res.json();
@@ -69,9 +69,10 @@ class Signup extends React.Component {
       .then(({ user }) => {
         this.props.updateUser(user);
         this.setState({ username: "", email: "", password: "" });
-        this.props.history.push("/");
+
+        this.props.router.navigate("/signin");
       })
-      .catch((errors) => this.setState(errors));
+      .catch((errors) => this.setState({ errors }));
   };
 
   render() {
@@ -84,7 +85,7 @@ class Signup extends React.Component {
             }}
           >
             <h2>Sign Up</h2>
-            <NavLink to="">Have an account ?</NavLink>
+            <NavLink to="/signin">Have an account ?</NavLink>
             <br />
             <input
               onChange={this.handleInput}
@@ -116,12 +117,12 @@ class Signup extends React.Component {
             <p>{this.state.errors.password}</p>
 
             <br />
-            {/* <button className="" type="submit">
+            <button className="" type="submit">
               Sign Up
-            </button> */}
-            <Link className="sign" to="">
+            </button>
+            {/* <Link className="sign" to="">
               Sign Up
-            </Link>
+            </Link> */}
           </form>
         </div>
       </>

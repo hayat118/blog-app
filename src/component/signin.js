@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../styles/index.css";
 import { withRouter } from "../utils/withRouter";
+// import { navigator } from "react-router-dom";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Signin extends React.Component {
     let { name, value } = target;
     let errors = this.state.errors;
 
-    this.setState({ errors, [name]: value });
+    this.setState({ [name]: value, errors });
 
     switch (name) {
       case "email":
@@ -40,17 +41,17 @@ class Signin extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
     const { email, password } = this.state;
 
     fetch("https://conduitapi.onrender.com/api/users/login", {
       method: "POST",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ user: { email, password } }),
     })
       .then((res) => {
+        console.log(res, "res");
         if (!res.ok) {
           return res.json().then(({ errors }) => {
             return Promise.reject(errors);
@@ -59,18 +60,19 @@ class Signin extends React.Component {
         return res.json();
       })
       .then(({ user }) => {
+        console.log(user, this.props, "hist");
         this.props.updateUser(user);
         this.setState({ email: "", password: "" });
-        this.props.history.push("/");
+        this.props.router.navigate("/");
       })
-      .then(console.log)
+
       .catch((errors) => {
         this.setState((prevState) => {
           return {
             ...prevState,
             errors: {
               ...prevState.errors,
-              email: "Email or password is not correct",
+              email: "Email or Password is incorrect!",
             },
           };
         });
@@ -87,7 +89,7 @@ class Signin extends React.Component {
             }}
           >
             <h2>Sign In</h2>
-            <NavLink to="">Need an account ?</NavLink>
+            <NavLink to="/signup">Need an account ?</NavLink>
             <br />
             <input
               onChange={this.hanldeInput}
@@ -109,9 +111,12 @@ class Signin extends React.Component {
             <p>{this.state.errors.password}</p>
 
             <br />
-            <Link className="sign" to="">
+            <button className="" type="submit">
               Sign In
-            </Link>
+            </button>
+            {/* <Link className="sign" to="">
+              Sign In
+            </Link> */}
           </form>
         </div>
       </>

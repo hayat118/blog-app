@@ -135,13 +135,15 @@ class Home extends React.Component {
             {this.state.data.articles.map((post, i) => {
               return (
                 <>
-                  {post.article.taglist.map((tag, i) => {
-                    return (
-                      <button key={i} className="tag">
-                        <Link to={`/?tag=${tag}`}>{tag}</Link>
-                      </button>
-                    );
-                  })}
+                  <div key={post.slug}>
+                    {post.article.taglist.map((tag, i) => {
+                      return (
+                        <button key={i} className="tag">
+                          <Link to={`/?tag=${tag}`}>{tag}</Link>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </>
               );
             })}
