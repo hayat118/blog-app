@@ -114,9 +114,6 @@ class Signin extends React.Component {
             <button className="" type="submit">
               Sign In
             </button>
-            {/* <Link className="sign" to="">
-              Sign In
-            </Link> */}
           </form>
         </div>
       </>

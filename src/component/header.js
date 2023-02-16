@@ -60,7 +60,7 @@ function AuthHeader() {
             </NavLink>
           </li>
           <li>
-            <NavLink exact="true" to="/new-post">
+            <NavLink exact="true" to="/newpost">
               New Articles
             </NavLink>
           </li>

@@ -6,7 +6,8 @@ import Signin from "./signin";
 
 import Single from "./singleArticle";
 import React from "react";
-// import Spinner from "./spinner";
+import Newpost from "./newpost";
+import Setting from "./setting";
 
 class App extends React.Component {
   constructor(props) {
@@ -68,6 +69,8 @@ class App extends React.Component {
             element={<Signin updateUser={this.updateUser} />}
           />
           <Route path="/:id" element={<Single />} />
+          <Route path="/newpost" element={<Newpost />} />
+          <Route path="/setting" element={<Setting />} />
         </Routes>
       </>
     );
