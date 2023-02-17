@@ -1,13 +1,15 @@
-import Header from "./header";
-import Home from "./home";
+import Header from "./Header";
+import Home from "./Home";
 import { Routes, Route } from "react-router-dom";
-import Signup from "./signup";
-import Signin from "./signin";
+import Signup from "./Signup";
+import Signin from "./Signin";
 
-import Single from "./singleArticle";
+import Single from "./SingleArticle";
 import React from "react";
-import Newpost from "./newpost";
-import Setting from "./setting";
+import Newpost from "./Newpost";
+import Setting from "./Setting";
+import Profile from "./Profile";
+import Nomatch from "./Nomatch";
 
 class App extends React.Component {
   constructor(props) {
@@ -58,21 +60,50 @@ class App extends React.Component {
       <>
         <Header isLoggedIn={this.state.isLoggedIn} user={this.state.user} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/signup"
-            element={<Signup updateUser={this.updateUser} />}
+        {this.state.isLoggedIn ? (
+          <this.AuthenticatedApp user={this.state.user} />
+        ) : (
+          <this.UnauthenticatedApp
+            user={this.state.user}
+            updateUser={this.updateUser}
           />
-          <Route
-            path="/signin"
-            element={<Signin updateUser={this.updateUser} />}
-          />
-          <Route path="/:id" element={<Single />} />
-          <Route path="/newpost" element={<Newpost />} />
-          <Route path="/setting" element={<Setting />} />
-        </Routes>
+        )}
       </>
+    );
+  }
+
+  AuthenticatedApp(props) {
+    return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/:id" element={<Single user={props.user} />} />
+        <Route path="/newpost" element={<Newpost user={props.user} />} />
+        <Route
+          path="/setting"
+          element={<Setting user={props.user} updateUser={props.updateUser} />}
+        />
+        <Route path="/profile" element={<Profile user={props.user} />} />
+      </Routes>
+    );
+  }
+
+  UnauthenticatedApp(props) {
+    return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:id" element={<Single user={props.user} />} />
+
+        <Route
+          path="/signup"
+          element={<Signup updateUser={props.updateUser} />}
+        />
+        <Route
+          path="/signin"
+          element={<Signin updateUser={props.updateUser} />}
+        />
+        <Route path="*" element={<Nomatch />} />
+      </Routes>
     );
   }
 }

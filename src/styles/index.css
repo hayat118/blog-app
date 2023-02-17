@@ -241,3 +241,9 @@ input {
   height: 120px;
   animation: spin 2s linear infinite;
 }
+/* single post */
+.single-box {
+  background-color: black;
+  color: white;
+  /* padding: 20px 100px; */
+}
