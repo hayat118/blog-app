@@ -87,6 +87,7 @@ class Single extends React.Component {
             </div>
             <br />
             <hr />
+            <div></div>
           </section>
         ) : (
           ""
