@@ -22,7 +22,30 @@ class Single extends React.Component {
       .then((data) => console.log(data, "data"));
   }
 
+  handleDelete = (slug) => {
+    fetch(`https://conduitapi.onrender.com/api/articles/${slug}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `${this.props.user.token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject("Unable to delete");
+        }
+      })
+      .then((data) => {
+        this.props.router.navigate("/");
+      })
+      .catch((error) => {
+        this.setState({ error });
+      });
+  };
+
   render() {
+    let slug = this.props.router.params.id;
+
     if (!this.state.slug) {
       return <h2>Fetching</h2>;
     }
@@ -51,6 +74,23 @@ class Single extends React.Component {
             ""
           )}
         </section>
+
+        {this.props.user ? (
+          <section>
+            <div>
+              <button onClick={() => this.handleDelete(slug)}>
+                Delete article
+              </button>
+              <button>
+                <Link to={`/editArticle/${slug}`}>Edit Article</Link>
+              </button>
+            </div>
+            <br />
+            <hr />
+          </section>
+        ) : (
+          ""
+        )}
       </>
     );
   }

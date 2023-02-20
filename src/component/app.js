@@ -10,6 +10,7 @@ import Newpost from "./Newpost";
 import Setting from "./Setting";
 import Profile from "./Profile";
 import Nomatch from "./Nomatch";
+import EditArticle from "./EditArticle";
 
 class App extends React.Component {
   constructor(props) {
@@ -73,6 +74,8 @@ class App extends React.Component {
   }
 
   AuthenticatedApp(props) {
+    // let slug = this.props.router.params.id;
+
     return (
       <Routes>
         <Route path="/" element={<Home />} />
@@ -84,6 +87,10 @@ class App extends React.Component {
           element={<Setting user={props.user} updateUser={props.updateUser} />}
         />
         <Route path="/profile" element={<Profile user={props.user} />} />
+        <Route
+          path={`/editArticle/:id`}
+          element={<EditArticle user={props.user} />}
+        />
       </Routes>
     );
   }
