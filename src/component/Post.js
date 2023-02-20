@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "../utils/withRouter";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 
 class Post extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Post extends React.Component {
       articlePerPage: 4,
       totalArticles: 0,
       activePage: 1,
+      activeTab: "global",
     };
   }
 
@@ -63,6 +64,10 @@ class Post extends React.Component {
       });
   };
 
+  handleGlobal = () => {
+    this.setState({ data: this.state.data });
+  };
+
   render() {
     const tagName = new URLSearchParams(this.props.router.location.search).get(
       "tag"
@@ -75,14 +80,13 @@ class Post extends React.Component {
       <>
         <section className="flex">
           <div className="article-box">
-            <Link
+            <button
               className="feed"
-              to="/"
+              // to="/"
               onClick={this.handleGlobal}
-              exact="true"
             >
               Global Feed
-            </Link>
+            </button>
 
             {this.state.data.articles.map((post, i) => {
               if (tagName && !post.article.taglist.includes(tagName)) {
@@ -128,7 +132,7 @@ class Post extends React.Component {
             })}
           </div>
         </section>
-        <section>
+        {/* <section>
           <div className="page-box ">
             <Pagination
               total={this.state.totalArticles}
@@ -143,7 +147,7 @@ class Post extends React.Component {
               }}
             />
           </div>
-        </section>
+        </section> */}
       </>
     );
   }

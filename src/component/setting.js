@@ -1,11 +1,17 @@
 import React from "react";
 import "../styles/index.css";
+import { Link } from "react-router-dom";
 
 class Setting extends React.Component {
   constructor(props) {
     super(props);
     this.setState = {};
   }
+
+  handleLogout = () => {
+    localStorage.clear();
+    this.props.router.navigate("/");
+  };
 
   render() {
     return (
@@ -36,6 +42,10 @@ class Setting extends React.Component {
             <br />
             <br />
             <button type="submit">Update Setting</button>
+            <br />
+            <Link className="logout" onClick={this.handleLogout} to="/">
+              Log Out
+            </Link>
           </form>
         </div>
       </>

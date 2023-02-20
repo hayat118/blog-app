@@ -180,8 +180,8 @@ h1 {
 
 /* home */
 .feed {
-  padding: 20px 0 20px 50px;
-  display: block;
+  display: inline-block;
+  margin: 20px 50px;
 }
 hr {
   width: 90%;
@@ -246,4 +246,23 @@ input {
   background-color: black;
   color: white;
   /* padding: 20px 100px; */
+}
+/*  */
+.logout {
+  padding: 5px 10px;
+  background-color: chocolate;
+  display: inline-block;
+  margin-top: 20px;
+}
+/*  */
+.banner {
+  text-align: center;
+  background-color: darkgrey;
+  padding: 50px 0;
+}
+.follow {
+  border: 1px solid white;
+  display: inline-block;
+  padding: 5px 10px;
+  margin-top: 20px;
 }

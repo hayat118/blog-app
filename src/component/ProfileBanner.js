@@ -1,3 +1,5 @@
+import "../styles/index.css";
+
 // import React from "react";
 
 // class ProfileBanner extends React.Component {
@@ -21,15 +23,17 @@
 function ProfileBanner(props) {
   return (
     <>
-      <div>
-        <h2>{props.user.username}</h2>
-      </div>
-      <div>
-        <p>
-          {" "}
-          +follow <span>{props.user.username}</span>
-        </p>
-      </div>
+      <section className="banner">
+        <div>
+          <h2>{props.user.username}</h2>
+        </div>
+        <div>
+          <p className="follow">
+            {" "}
+            +follow <span>{props.user.username}</span>
+          </p>
+        </div>
+      </section>
     </>
   );
 }
