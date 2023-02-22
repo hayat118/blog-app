@@ -266,3 +266,27 @@ input {
   padding: 5px 10px;
   margin-top: 20px;
 }
+
+/*  */
+.btn {
+  background-color: #5cb85b;
+  display: inline-block;
+  padding: 5px 10px;
+  width: auto;
+  margin-left: 230px;
+}
+.comment-box {
+  border: 1px solid black;
+  margin-bottom: 2px;
+  padding: 5px;
+}
+.comment {
+  background-color: bisque;
+  padding: 10px 0;
+}
+.comment span {
+  margin-left: 4px;
+}
+.area {
+  margin-right: 45px;
+}

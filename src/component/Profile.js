@@ -55,13 +55,13 @@ class Profile extends React.Component {
           <div className="flex">
             <button
               onClick={() => this.handleActive("author")}
-              className={activeTab === "author" && "active"}
+              className={activeTab === "author" ? "active" : ""}
             >
               My Articles
             </button>
             <button
               onClick={() => this.handleActive("favorited")}
-              className={activeTab === "favorited" && "active"}
+              className={activeTab === "favorited" ? "active" : ""}
             >
               Favorited Articles
             </button>

@@ -121,7 +121,7 @@ class Post extends React.Component {
                   <div key={post.slug}>
                     {post.article.taglist.map((tag, i) => {
                       return (
-                        <button key={i} className="tag">
+                        <button key={tag} className="tag">
                           <Link to={`/?tag=${tag}`}>{tag}</Link>
                         </button>
                       );

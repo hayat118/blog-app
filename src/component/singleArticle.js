@@ -2,6 +2,8 @@ import React from "react";
 // import { useParams } from "react-router-dom";
 import { withRouter } from "../utils/withRouter";
 import { Link } from "react-router-dom";
+import Addcomment from "./Addcomment";
+// import Comments from "./Comments";
 
 class Single extends React.Component {
   constructor(props) {
@@ -18,11 +20,12 @@ class Single extends React.Component {
     let slug = this.props.router.params.id;
     fetch(`https://conduitapi.onrender.com/api/articles/${slug}`)
       .then((res) => res.json())
-      .then((data) => this.setState({ slug: data }))
-      .then((data) => console.log(data, "data"));
+      .then((data) => this.setState({ slug: data }));
+    // .then((data) => console.log(data, "data"));
   }
 
   handleDelete = (slug) => {
+    console.log(slug, "slug");
     fetch(`https://conduitapi.onrender.com/api/articles/${slug}`, {
       method: "DELETE",
       headers: {
@@ -49,7 +52,7 @@ class Single extends React.Component {
     if (!this.state.slug) {
       return <h2>Fetching</h2>;
     }
-    console.log(this.state.slug, "slug");
+    // console.log(this.state.slug, "slug");
     return (
       <>
         <section>
@@ -87,11 +90,17 @@ class Single extends React.Component {
             </div>
             <br />
             <hr />
-            <div></div>
+            <div>
+              <Addcomment
+                user={this.props.user}
+                slug={this.state.slug.article.article.slug}
+              />
+            </div>
           </section>
         ) : (
           ""
         )}
+        <br />
       </>
     );
   }
